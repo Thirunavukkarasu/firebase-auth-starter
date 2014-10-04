@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.firebase.com/js/client/1.0.21/firebase.js'></script>
+    <script src='https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js'></script>
+  </head>
+  <body>
+    <script type='text/javascript'>
+      // Create a new Firebase reference, and a new instance of the Login client
+      var chatRef = new Firebase('https://firechat-iv.firebaseio.com');
+      var auth = new FirebaseSimpleLogin(chatRef, function(err, user) {
+        // Once authenticated, instantiate Firechat with our user id and user name
+        if (user) {  
+            console.log(user);
+            $('#displayName').append(user.displayName);
+            $('#gender').append(user.thirdPartyUserData.gender);
+        }
+      });
+    </script>
+    <div id='firebase-wrapper'>
+      <a href='#' onclick='auth.login("facebook");'>Login</a>
+      <h1>Welcome <i id="displayName"></i></h1>
+      <h2>Your gender is: <i id="gender"></i></h2>
+    </div>
+  </body>
+</html>
